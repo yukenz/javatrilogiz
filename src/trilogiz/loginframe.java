@@ -5,18 +5,22 @@
  */
 package trilogiz;
 
+
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.io.FileInputStream;
+
+import java.io.IOException;
+
+import java.util.Properties;
 import javax.swing.JOptionPane; 
 
 /**
  *
  * @author ryzen
  */
-public class loginframe extends javax.swing.JFrame {
-
+public class loginframe extends javax.swing.JFrame{
+ 
     /**
      * Creates new form Writedata
      */
@@ -36,12 +40,15 @@ public class loginframe extends javax.swing.JFrame {
         PanelIconLogin = new javax.swing.JPanel();
         LoginText = new javax.swing.JLabel();
         IconKontak = new javax.swing.JLabel();
+        PanelLoading = new javax.swing.JPanel();
+        LabelLoading = new javax.swing.JLabel();
         PanelLogin = new javax.swing.JPanel();
         LabelUsername = new javax.swing.JLabel();
         LabelLogin = new javax.swing.JLabel();
         LabelPass = new javax.swing.JLabel();
         username_input = new javax.swing.JTextField();
         password_input = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN SETTER");
@@ -58,26 +65,47 @@ public class loginframe extends javax.swing.JFrame {
         IconKontak.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         IconKontak.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trilogiz/icon/icons8_user_127px.png"))); // NOI18N
 
+        LabelLoading.setFont(new java.awt.Font("Bebas Neue", 0, 18)); // NOI18N
+        LabelLoading.setForeground(new java.awt.Color(255, 255, 255));
+        LabelLoading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelLoading.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trilogiz/icon/giphy.gif"))); // NOI18N
+
+        javax.swing.GroupLayout PanelLoadingLayout = new javax.swing.GroupLayout(PanelLoading);
+        PanelLoading.setLayout(PanelLoadingLayout);
+        PanelLoadingLayout.setHorizontalGroup(
+            PanelLoadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(LabelLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        PanelLoadingLayout.setVerticalGroup(
+            PanelLoadingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(LabelLoading, javax.swing.GroupLayout.PREFERRED_SIZE, 60, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout PanelIconLoginLayout = new javax.swing.GroupLayout(PanelIconLogin);
         PanelIconLogin.setLayout(PanelIconLoginLayout);
         PanelIconLoginLayout.setHorizontalGroup(
             PanelIconLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelIconLoginLayout.createSequentialGroup()
-                .addGap(124, 124, 124)
+                .addGap(135, 135, 135)
                 .addGroup(PanelIconLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(IconKontak)
-                    .addComponent(LoginText))
-                .addContainerGap(159, Short.MAX_VALUE))
+                    .addComponent(LoginText)
+                    .addComponent(PanelLoading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         PanelIconLoginLayout.setVerticalGroup(
             PanelIconLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelIconLoginLayout.createSequentialGroup()
-                .addGap(138, 138, 138)
+                .addGap(145, 145, 145)
                 .addComponent(IconKontak)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LoginText)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(PanelLoading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
+
+        PanelLoading.setVisible(false);
 
         getContentPane().add(PanelIconLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 470));
 
@@ -134,25 +162,39 @@ public class loginframe extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Server");
+        jButton1.setOpaque(false);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelLoginLayout = new javax.swing.GroupLayout(PanelLogin);
         PanelLogin.setLayout(PanelLoginLayout);
         PanelLoginLayout.setHorizontalGroup(
             PanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelLoginLayout.createSequentialGroup()
-                .addGap(103, 103, 103)
                 .addGroup(PanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LabelPass)
-                    .addComponent(LabelUsername)
-                    .addGroup(PanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(username_input)
-                        .addComponent(password_input, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                        .addComponent(LabelLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLoginLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(PanelLoginLayout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(PanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LabelPass)
+                            .addComponent(LabelUsername)
+                            .addGroup(PanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(username_input)
+                                .addComponent(password_input, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                .addComponent(LabelLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 103, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         PanelLoginLayout.setVerticalGroup(
             PanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelLoginLayout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addGap(182, 182, 182)
                 .addComponent(LabelUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(username_input, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,7 +204,9 @@ public class loginframe extends javax.swing.JFrame {
                 .addComponent(password_input, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LabelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         getContentPane().add(PanelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 370, 470));
@@ -194,6 +238,7 @@ public class loginframe extends javax.swing.JFrame {
         //1.setter 2.operator 0.gatauanjing
         if(statusloginnya == 1){
             //if(Trilogiz.job == 1){
+            PanelLoading.setVisible(true);
             JOptionPane.showMessageDialog(null, "Login Berhasil, hai setter");
             Setter setter= new Setter();
             setter.setVisible(true);
@@ -225,6 +270,32 @@ public class loginframe extends javax.swing.JFrame {
                     LabelLoginMouseClicked(null);
          }
     }//GEN-LAST:event_username_inputKeyPressed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        Trilogiz.lgf.setEnabled(false);
+        Server_Setting srvst = new Server_Setting();
+
+        try (FileInputStream inputfile = new FileInputStream("config.properties")) {
+
+            Properties prop = new Properties();
+            prop.load(inputfile);
+            // set the properties value
+            srvst.LabelServerDB_in.setText(prop.getProperty("server"));
+            srvst.LabelUsernameDB_in.setText(prop.getProperty("username"));
+            srvst.LabePasswordDB_in.setText(prop.getProperty("password"));
+            srvst.LabelDatabaseDB_in.setText(prop.getProperty("db"));
+            // save properties to project root folder
+            //prop.store(output, null);
+
+            System.out.println("Reading : "+prop);
+
+        } catch (IOException io) {
+            io.printStackTrace();
+            System.out.println("File Not Found or Empty or Wrong");
+        }
+        srvst.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -264,12 +335,15 @@ public class loginframe extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconKontak;
+    private javax.swing.JLabel LabelLoading;
     private javax.swing.JLabel LabelLogin;
     private javax.swing.JLabel LabelPass;
     private javax.swing.JLabel LabelUsername;
     private javax.swing.JLabel LoginText;
     private javax.swing.JPanel PanelIconLogin;
+    private javax.swing.JPanel PanelLoading;
     private javax.swing.JPanel PanelLogin;
+    private javax.swing.JButton jButton1;
     private javax.swing.JTextField password_input;
     private javax.swing.JTextField username_input;
     // End of variables declaration//GEN-END:variables

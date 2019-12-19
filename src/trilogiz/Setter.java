@@ -6,16 +6,19 @@
 package trilogiz;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.JTable;
 
 import javax.swing.table.DefaultTableModel;
 import org.freixas.jcalendar.DateEvent;
+import static trilogiz.Trilogiz.tanggalsekarang;
 
 /**
  *
@@ -26,6 +29,7 @@ public static int idnow;
 public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer.parseInt(Trilogiz.tanggalsekarang.substring(0,4)), Integer.parseInt(Trilogiz.tanggalsekarang.substring(4,6))-1, Integer.parseInt(Trilogiz.tanggalsekarang.substring(6,8))).getTime();;
     /**
      * Creates new form Setter
+     * @return String
      */
     public String statusjob(){
         String status;
@@ -38,6 +42,15 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
             status = null;
         }
         return status;
+    }
+    public void refreeshjtable(JTable namajtabel, String[][] databarang_in){
+        DefaultTableModel model = (DefaultTableModel) namajtabel.getModel();
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+            for(int i=0;i<databarang_in.length;i++){
+            model.addRow(new Object[]{databarang_in[i][0],databarang_in[i][4],databarang_in[i][1],databarang_in[i][7]});
+            }
     }
     public Setter() {
         initComponents();
@@ -68,32 +81,13 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
         jButton1 = new javax.swing.JButton();
         LabelCekdataorder = new javax.swing.JLabel();
         LabelTanggal_status = new org.freixas.jcalendar.JCalendarCombo();
-        jPanel1 = new javax.swing.JPanel();
-        LabelJenisBahan = new javax.swing.JLabel();
-        LabelUkuran = new javax.swing.JLabel();
-        LabelNamaSetter = new javax.swing.JLabel();
-        LabelNamaCustomer = new javax.swing.JLabel();
-        LabelSubmit = new javax.swing.JLabel();
-        LabelKeterangan1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        LabelKeterangan_input = new javax.swing.JTextArea();
-        LabelNamaCustomer_input = new javax.swing.JTextField();
-        LabelJenisBahan_input = new javax.swing.JTextField();
-        LabelUkuran_input = new javax.swing.JTextField();
-        LabelNamaSetter_input = new javax.swing.JTextField();
-        LabelHarga_input = new javax.swing.JTextField();
-        LabelHarga = new javax.swing.JLabel();
-        LabelPootnganHarga = new javax.swing.JLabel();
-        LabelQty = new javax.swing.JLabel();
-        LabelPootnganHarga_input = new javax.swing.JTextField();
-        LabelQty_input = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         NamaCustEdit = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         LabelStatusEdit = new javax.swing.JLabel();
-        LabelJenisBahanEdit = new javax.swing.JLabel();
-        LabelSetterEdit = new javax.swing.JLabel();
+        LabelItemEdit = new javax.swing.JLabel();
+        LabelDesainerEdit = new javax.swing.JLabel();
         LabelIDEdit = new javax.swing.JLabel();
         LabelUkuranEdit = new javax.swing.JLabel();
         EditNamaCustomer_input = new javax.swing.JTextField();
@@ -104,15 +98,26 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
         EditUkuran_input = new javax.swing.JTextField();
         LabelQtyEdit1 = new javax.swing.JLabel();
         EditQty_input = new javax.swing.JTextField();
-        Editharga_input = new javax.swing.JTextField();
-        LabelHargaEdit = new javax.swing.JLabel();
-        LabelpotHargaEdit = new javax.swing.JLabel();
-        EditpotHarga_input = new javax.swing.JTextField();
         LabelKetEdit = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         EditKeterangan_input = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
         EditStatus_input = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        LabelItem = new javax.swing.JLabel();
+        LabelUkuran = new javax.swing.JLabel();
+        LabelNamaDesainer = new javax.swing.JLabel();
+        LabelNamaCustomer = new javax.swing.JLabel();
+        LabelSubmit = new javax.swing.JLabel();
+        LabelKeterangan1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        LabelKeterangan_input = new javax.swing.JTextArea();
+        LabelNamaCustomer_input = new javax.swing.JTextField();
+        LabelItem_input = new javax.swing.JTextField();
+        LabelUkuran_input = new javax.swing.JTextField();
+        LabelNamaDesainer_input = new javax.swing.JTextField();
+        LabelQty = new javax.swing.JLabel();
+        LabelQty_input = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Setter Tab");
@@ -251,159 +256,6 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
 
         getContentPane().add(userpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 110));
 
-        jPanel1.setBackground(new java.awt.Color(52, 73, 94));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        LabelJenisBahan.setBackground(new java.awt.Color(211, 84, 0));
-        LabelJenisBahan.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelJenisBahan.setForeground(new java.awt.Color(255, 255, 255));
-        LabelJenisBahan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelJenisBahan.setText("Jenis Bahan");
-        LabelJenisBahan.setOpaque(true);
-        jPanel1.add(LabelJenisBahan, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 101, 27));
-
-        LabelUkuran.setBackground(new java.awt.Color(211, 84, 0));
-        LabelUkuran.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelUkuran.setForeground(new java.awt.Color(255, 255, 255));
-        LabelUkuran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelUkuran.setText("Ukuran");
-        LabelUkuran.setOpaque(true);
-        jPanel1.add(LabelUkuran, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 101, 27));
-
-        LabelNamaSetter.setBackground(new java.awt.Color(211, 84, 0));
-        LabelNamaSetter.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelNamaSetter.setForeground(new java.awt.Color(255, 255, 255));
-        LabelNamaSetter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelNamaSetter.setText("Nama Setter");
-        LabelNamaSetter.setOpaque(true);
-        jPanel1.add(LabelNamaSetter, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 101, 27));
-
-        LabelNamaCustomer.setBackground(new java.awt.Color(211, 84, 0));
-        LabelNamaCustomer.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelNamaCustomer.setForeground(new java.awt.Color(255, 255, 255));
-        LabelNamaCustomer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelNamaCustomer.setText("Nama Customer");
-        LabelNamaCustomer.setOpaque(true);
-        jPanel1.add(LabelNamaCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 101, 27));
-
-        LabelSubmit.setBackground(new java.awt.Color(41, 128, 185));
-        LabelSubmit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelSubmit.setForeground(new java.awt.Color(255, 255, 255));
-        LabelSubmit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelSubmit.setText("DAFTARKAN PESANAN");
-        LabelSubmit.setOpaque(true);
-        LabelSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LabelSubmitMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                LabelSubmitMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                LabelSubmitMouseExited(evt);
-            }
-        });
-        jPanel1.add(LabelSubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 480, 340, 30));
-
-        LabelKeterangan1.setBackground(new java.awt.Color(211, 84, 0));
-        LabelKeterangan1.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelKeterangan1.setForeground(new java.awt.Color(255, 255, 255));
-        LabelKeterangan1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelKeterangan1.setText("Keterangan");
-        LabelKeterangan1.setOpaque(true);
-        jPanel1.add(LabelKeterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, 340, 30));
-
-        LabelKeterangan_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelKeterangan_input.setColumns(20);
-        LabelKeterangan_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelKeterangan_input.setLineWrap(true);
-        LabelKeterangan_input.setRows(5);
-        LabelKeterangan_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        jScrollPane1.setViewportView(LabelKeterangan_input);
-        LabelKeterangan_input.getAccessibleContext().setAccessibleName("");
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, 340, 100));
-
-        LabelNamaCustomer_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelNamaCustomer_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelNamaCustomer_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        jPanel1.add(LabelNamaCustomer_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 230, 27));
-
-        LabelJenisBahan_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelJenisBahan_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelJenisBahan_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        jPanel1.add(LabelJenisBahan_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 230, 27));
-
-        LabelUkuran_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelUkuran_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelUkuran_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        jPanel1.add(LabelUkuran_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 230, 27));
-
-        LabelNamaSetter_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelNamaSetter_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelNamaSetter_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        jPanel1.add(LabelNamaSetter_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 230, 27));
-        LabelNamaSetter_input.setText(Trilogiz.namauser);
-
-        LabelHarga_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelHarga_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelHarga_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        LabelHarga_input.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                LabelHarga_inputKeyTyped(evt);
-            }
-        });
-        jPanel1.add(LabelHarga_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, 170, 27));
-        LabelNamaSetter_input.setText(Trilogiz.namauser);
-
-        LabelHarga.setBackground(new java.awt.Color(211, 84, 0));
-        LabelHarga.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelHarga.setForeground(new java.awt.Color(255, 255, 255));
-        LabelHarga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelHarga.setText("Harga");
-        LabelHarga.setOpaque(true);
-        jPanel1.add(LabelHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 170, 27));
-
-        LabelPootnganHarga.setBackground(new java.awt.Color(211, 84, 0));
-        LabelPootnganHarga.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelPootnganHarga.setForeground(new java.awt.Color(255, 255, 255));
-        LabelPootnganHarga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelPootnganHarga.setText("Potongan Harga");
-        LabelPootnganHarga.setOpaque(true);
-        jPanel1.add(LabelPootnganHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, 170, 27));
-
-        LabelQty.setBackground(new java.awt.Color(211, 84, 0));
-        LabelQty.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelQty.setForeground(new java.awt.Color(255, 255, 255));
-        LabelQty.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelQty.setText("Qty(meter)");
-        LabelQty.setOpaque(true);
-        jPanel1.add(LabelQty, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 101, 27));
-
-        LabelPootnganHarga_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelPootnganHarga_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelPootnganHarga_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        LabelPootnganHarga_input.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                LabelPootnganHarga_inputKeyTyped(evt);
-            }
-        });
-        jPanel1.add(LabelPootnganHarga_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 170, 27));
-        LabelNamaSetter_input.setText(Trilogiz.namauser);
-
-        LabelQty_input.setBackground(new java.awt.Color(255, 255, 255));
-        LabelQty_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelQty_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
-        LabelQty_input.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                LabelQty_inputKeyTyped(evt);
-            }
-        });
-        jPanel1.add(LabelQty_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 230, 27));
-        LabelNamaSetter_input.setText(Trilogiz.namauser);
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 520));
-
         jPanel2.setBackground(new java.awt.Color(52, 73, 94));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -426,11 +278,10 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
         jScrollPane3.setViewportView(jTable1);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         jScrollPane3.getViewport().setBackground(new Color(52,73,94));
-        String[][] databarang = new read_data(new String[]{"id","jenis_bahan","ukuran","keterangan","nama_customer","nama_setter","qty"},new String[]{"int","string","string","string","string","string","int"},"barang"+Trilogiz.tanggalsekarang).read_data();
-        String[][] datastatus = new read_data(new String[]{"id","pengerjaan","harga","potongan_harga"},new String[]{"int","string","int","int"},"status"+Trilogiz.tanggalsekarang).read_data();
+        String[][] databarang = new read_data(new String[]{"id","jenis_bahan","ukuran","keterangan","nama_customer","nama_desainer","qty","pengerjaan"},new String[]{"int","string","string","string","string","string","int","string"},"barang"+Trilogiz.tanggalsekarang).read_data();
         if(databarang == null){}else{
             for(int i=0;i<databarang.length;i++){
-                model.addRow(new Object[]{databarang[i][0],databarang[i][4],databarang[i][1],datastatus[i][1]});
+                model.addRow(new Object[]{databarang[i][0],databarang[i][4],databarang[i][1],databarang[i][7]});
             }
         }
 
@@ -444,21 +295,21 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
         LabelStatusEdit.setOpaque(true);
         jPanel2.add(LabelStatusEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 101, 27));
 
-        LabelJenisBahanEdit.setBackground(new java.awt.Color(211, 84, 0));
-        LabelJenisBahanEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelJenisBahanEdit.setForeground(new java.awt.Color(255, 255, 255));
-        LabelJenisBahanEdit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelJenisBahanEdit.setText("Jenis Bahan");
-        LabelJenisBahanEdit.setOpaque(true);
-        jPanel2.add(LabelJenisBahanEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 101, 27));
+        LabelItemEdit.setBackground(new java.awt.Color(211, 84, 0));
+        LabelItemEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelItemEdit.setForeground(new java.awt.Color(255, 255, 255));
+        LabelItemEdit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelItemEdit.setText("Item");
+        LabelItemEdit.setOpaque(true);
+        jPanel2.add(LabelItemEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 101, 27));
 
-        LabelSetterEdit.setBackground(new java.awt.Color(211, 84, 0));
-        LabelSetterEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelSetterEdit.setForeground(new java.awt.Color(255, 255, 255));
-        LabelSetterEdit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelSetterEdit.setText("Setter");
-        LabelSetterEdit.setOpaque(true);
-        jPanel2.add(LabelSetterEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 101, 27));
+        LabelDesainerEdit.setBackground(new java.awt.Color(211, 84, 0));
+        LabelDesainerEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelDesainerEdit.setForeground(new java.awt.Color(255, 255, 255));
+        LabelDesainerEdit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelDesainerEdit.setText("Desainer");
+        LabelDesainerEdit.setOpaque(true);
+        jPanel2.add(LabelDesainerEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 101, 27));
 
         LabelIDEdit.setBackground(new java.awt.Color(211, 84, 0));
         LabelIDEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
@@ -500,6 +351,9 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
             }
         });
         EditID_input.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                EditID_inputKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 EditID_inputKeyTyped(evt);
             }
@@ -537,55 +391,19 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
         });
         jPanel2.add(EditQty_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 220, 27));
 
-        Editharga_input.setBackground(new java.awt.Color(255, 255, 255));
-        Editharga_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        Editharga_input.setForeground(new java.awt.Color(0, 0, 0));
-        Editharga_input.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                Editharga_inputKeyTyped(evt);
-            }
-        });
-        jPanel2.add(Editharga_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 220, 27));
-
-        LabelHargaEdit.setBackground(new java.awt.Color(211, 84, 0));
-        LabelHargaEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelHargaEdit.setForeground(new java.awt.Color(255, 255, 255));
-        LabelHargaEdit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelHargaEdit.setText("Harga");
-        LabelHargaEdit.setOpaque(true);
-        jPanel2.add(LabelHargaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 101, 27));
-
-        LabelpotHargaEdit.setBackground(new java.awt.Color(211, 84, 0));
-        LabelpotHargaEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        LabelpotHargaEdit.setForeground(new java.awt.Color(255, 255, 255));
-        LabelpotHargaEdit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelpotHargaEdit.setText("Pot.Harga");
-        LabelpotHargaEdit.setOpaque(true);
-        jPanel2.add(LabelpotHargaEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 101, 27));
-
-        EditpotHarga_input.setBackground(new java.awt.Color(255, 255, 255));
-        EditpotHarga_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
-        EditpotHarga_input.setForeground(new java.awt.Color(0, 0, 0));
-        EditpotHarga_input.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                EditpotHarga_inputKeyTyped(evt);
-            }
-        });
-        jPanel2.add(EditpotHarga_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 220, 27));
-
         LabelKetEdit.setBackground(new java.awt.Color(211, 84, 0));
         LabelKetEdit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
         LabelKetEdit.setForeground(new java.awt.Color(255, 255, 255));
         LabelKetEdit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelKetEdit.setText("Keterangan");
         LabelKetEdit.setOpaque(true);
-        jPanel2.add(LabelKetEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 101, 27));
+        jPanel2.add(LabelKetEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 330, 27));
 
         EditKeterangan_input.setColumns(20);
         EditKeterangan_input.setRows(5);
         jScrollPane2.setViewportView(EditKeterangan_input);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 330, -1));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 330, -1));
 
         jButton3.setText("UPDATE");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -598,16 +416,131 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 440, -1, -1));
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, -1, -1));
 
         EditStatus_input.setBackground(new java.awt.Color(255, 255, 255));
         EditStatus_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
         EditStatus_input.setForeground(new java.awt.Color(0, 0, 0));
-        EditStatus_input.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Proses Desain", "Antri Cetak", "Proses Cetak", "Selesai", "Dikirim", "Dibatalkan" }));
+        EditStatus_input.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Menunggu", "Proses", "Selesai", "Telah Diambil", "Dibatalkan" }));
         jPanel2.add(EditStatus_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 220, 27));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 520));
         jPanel2.setVisible(false);
+
+        jPanel1.setBackground(new java.awt.Color(52, 73, 94));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        LabelItem.setBackground(new java.awt.Color(211, 84, 0));
+        LabelItem.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelItem.setForeground(new java.awt.Color(255, 255, 255));
+        LabelItem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelItem.setText("Item");
+        LabelItem.setOpaque(true);
+        jPanel1.add(LabelItem, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 101, 27));
+
+        LabelUkuran.setBackground(new java.awt.Color(211, 84, 0));
+        LabelUkuran.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelUkuran.setForeground(new java.awt.Color(255, 255, 255));
+        LabelUkuran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelUkuran.setText("Ukuran");
+        LabelUkuran.setOpaque(true);
+        jPanel1.add(LabelUkuran, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 101, 27));
+
+        LabelNamaDesainer.setBackground(new java.awt.Color(211, 84, 0));
+        LabelNamaDesainer.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelNamaDesainer.setForeground(new java.awt.Color(255, 255, 255));
+        LabelNamaDesainer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelNamaDesainer.setText("Desainer");
+        LabelNamaDesainer.setOpaque(true);
+        jPanel1.add(LabelNamaDesainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 101, 27));
+
+        LabelNamaCustomer.setBackground(new java.awt.Color(211, 84, 0));
+        LabelNamaCustomer.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelNamaCustomer.setForeground(new java.awt.Color(255, 255, 255));
+        LabelNamaCustomer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelNamaCustomer.setText("Nama Customer");
+        LabelNamaCustomer.setOpaque(true);
+        jPanel1.add(LabelNamaCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 101, 27));
+
+        LabelSubmit.setBackground(new java.awt.Color(41, 128, 185));
+        LabelSubmit.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelSubmit.setForeground(new java.awt.Color(255, 255, 255));
+        LabelSubmit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelSubmit.setText("DAFTARKAN PESANAN");
+        LabelSubmit.setOpaque(true);
+        LabelSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LabelSubmitMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LabelSubmitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LabelSubmitMouseExited(evt);
+            }
+        });
+        jPanel1.add(LabelSubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 340, 30));
+
+        LabelKeterangan1.setBackground(new java.awt.Color(211, 84, 0));
+        LabelKeterangan1.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelKeterangan1.setForeground(new java.awt.Color(255, 255, 255));
+        LabelKeterangan1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelKeterangan1.setText("Keterangan");
+        LabelKeterangan1.setOpaque(true);
+        jPanel1.add(LabelKeterangan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 340, 30));
+
+        LabelKeterangan_input.setBackground(new java.awt.Color(255, 255, 255));
+        LabelKeterangan_input.setColumns(20);
+        LabelKeterangan_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelKeterangan_input.setLineWrap(true);
+        LabelKeterangan_input.setRows(5);
+        LabelKeterangan_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
+        jScrollPane1.setViewportView(LabelKeterangan_input);
+        LabelKeterangan_input.getAccessibleContext().setAccessibleName("");
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 340, 100));
+
+        LabelNamaCustomer_input.setBackground(new java.awt.Color(255, 255, 255));
+        LabelNamaCustomer_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelNamaCustomer_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
+        jPanel1.add(LabelNamaCustomer_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 230, 27));
+
+        LabelItem_input.setBackground(new java.awt.Color(255, 255, 255));
+        LabelItem_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelItem_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
+        jPanel1.add(LabelItem_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, 230, 27));
+
+        LabelUkuran_input.setBackground(new java.awt.Color(255, 255, 255));
+        LabelUkuran_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelUkuran_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
+        jPanel1.add(LabelUkuran_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 230, 27));
+
+        LabelNamaDesainer_input.setBackground(new java.awt.Color(255, 255, 255));
+        LabelNamaDesainer_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelNamaDesainer_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
+        jPanel1.add(LabelNamaDesainer_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 230, 27));
+        LabelNamaDesainer_input.setText(Trilogiz.namauser);
+
+        LabelQty.setBackground(new java.awt.Color(211, 84, 0));
+        LabelQty.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelQty.setForeground(new java.awt.Color(255, 255, 255));
+        LabelQty.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelQty.setText("Qty (meter)");
+        LabelQty.setOpaque(true);
+        jPanel1.add(LabelQty, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 101, 27));
+
+        LabelQty_input.setBackground(new java.awt.Color(255, 255, 255));
+        LabelQty_input.setFont(new java.awt.Font("Geometr706 BlkCn BT", 0, 14)); // NOI18N
+        LabelQty_input.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 126, 34)));
+        LabelQty_input.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                LabelQty_inputKeyTyped(evt);
+            }
+        });
+        jPanel1.add(LabelQty_input, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 230, 27));
+        LabelNamaDesainer_input.setText(Trilogiz.namauser);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 520));
 
         pack();
         setLocationRelativeTo(null);
@@ -625,7 +558,7 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
 
     private void LabelSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LabelSubmitMouseClicked
         // TODO add your handling code here:
-        String allstring = ""+LabelNamaCustomer_input.getText()+LabelJenisBahan_input.getText()+LabelUkuran_input.getText()+LabelNamaSetter_input.getText()+LabelKeterangan_input.getText();
+        String allstring = ""+LabelNamaCustomer_input.getText()+LabelItem_input.getText()+LabelUkuran_input.getText()+LabelNamaDesainer_input.getText()+LabelKeterangan_input.getText();
         String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,'";
         System.out.println(allstring);
         for (int i = 0; i < specialChars.length(); i++) {
@@ -634,30 +567,15 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
              return;
          }
         }
-        if(LabelNamaCustomer_input.getText().isEmpty()||LabelJenisBahan_input.getText().isEmpty()||LabelUkuran_input.getText().isEmpty()||LabelNamaSetter_input.getText().isEmpty()||LabelQty_input.getText().isEmpty()||LabelKeterangan_input.getText().isEmpty()|LabelHarga_input.getText().isEmpty()||LabelPootnganHarga_input.getText().isEmpty()){
+        if(LabelNamaCustomer_input.getText().isEmpty()||LabelItem_input.getText().isEmpty()||LabelUkuran_input.getText().isEmpty()||LabelNamaDesainer_input.getText().isEmpty()||LabelQty_input.getText().isEmpty()||LabelKeterangan_input.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "SEMUA HARUS DIISI !!");
             return;
         }
-        new write_data(new String[]{"jenis_bahan","ukuran","keterangan","nama_customer","nama_setter","qty"},new String[]{String.format("'%s'", LabelJenisBahan_input.getText()),String.format("'%s'", LabelUkuran_input.getText()),String.format("'%s'", LabelKeterangan_input.getText()),String.format("'%s'", LabelNamaCustomer_input.getText()),String.format("'%s'", LabelNamaSetter_input.getText()),String.format("'%s'", LabelQty_input.getText())},"barang"+Trilogiz.tanggalsekarang).write_data();
-        new write_data(new String[]{"pengerjaan","harga","potongan_harga"},new String[]{"'Pending'",String.format("%d", Integer.parseInt(LabelHarga_input.getText())),String.format("%d", Integer.parseInt(LabelPootnganHarga_input.getText()))},"status"+Trilogiz.tanggalsekarang).write_data();
-        JOptionPane.showMessageDialog(null, "Proses mendaftarkan ke database selesai, cek log jika ada error");
+        new write_data(new String[]{"jenis_bahan","ukuran","keterangan","nama_customer","nama_desainer","qty","pengerjaan"},new String[]{String.format("'%s'", LabelItem_input.getText()),String.format("'%s'", LabelUkuran_input.getText()),String.format("'%s'", LabelKeterangan_input.getText()),String.format("'%s'", LabelNamaCustomer_input.getText()),String.format("'%s'", LabelNamaDesainer_input.getText()),String.format("'%s'", LabelQty_input.getText()),"'Menunggu'"},"barang"+Trilogiz.tanggalsekarang).write_data();
         read_data.getlastid("barang"+Trilogiz.tanggalsekarang, LabelID_status);
-        
+        refreeshjtable(jTable1, new read_data(new String[]{"id","jenis_bahan","ukuran","keterangan","nama_customer","nama_desainer","qty","pengerjaan"},new String[]{"int","string","string","string","string","string","int","string"},"barang"+Trilogiz.tanggalsekarang).read_data());
+        JOptionPane.showMessageDialog(null, "Proses mendaftarkan ke database selesai, cek log jika ada error");
     }//GEN-LAST:event_LabelSubmitMouseClicked
-
-    private void LabelHarga_inputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LabelHarga_inputKeyTyped
-        // TODO add your handling code here:
-        if(!Character.isDigit(evt.getKeyChar())){
-            evt.consume();
-        }
-    }//GEN-LAST:event_LabelHarga_inputKeyTyped
-
-    private void LabelPootnganHarga_inputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LabelPootnganHarga_inputKeyTyped
-        // TODO add your handling code here:
-        if(!Character.isDigit(evt.getKeyChar())){
-            evt.consume();
-        }
-    }//GEN-LAST:event_LabelPootnganHarga_inputKeyTyped
 
     private void LabelQty_inputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LabelQty_inputKeyTyped
         // TODO add your handling code here:
@@ -686,6 +604,7 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         dispose();
+        new checkingdb().checkdbwithdate("barang"+tanggalsekarang);
         new Setter().setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -721,8 +640,10 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
         idnow = Integer.parseInt(EditID_input.getText());
-        String[] hasilcek = read_data.singlereaddata(Integer.parseInt(Trilogiz.tanggalsekarang), Integer.parseInt(EditID_input.getText()));
+        String[] hasilcek = read_data.singlereaddata(Integer.parseInt(Trilogiz.tanggalsekarang), idnow);
         System.out.println(Arrays.toString(hasilcek));
+
+        
         if(Arrays.toString(hasilcek).contains("null")){
             JOptionPane.showMessageDialog(null, "ID tidak ada");
         }else{
@@ -735,15 +656,13 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
             EditSetter_input.setText(hasilcek[3]);
             EditQty_input.setText(hasilcek[4]);
             EditStatus_input.setSelectedItem(hasilcek[5]);
-            Editharga_input.setText(hasilcek[6]);
-            EditpotHarga_input.setText(hasilcek[7]);
-            EditKeterangan_input.setText(hasilcek[8]);
+            EditKeterangan_input.setText(hasilcek[6]);
         }
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
-        String allstring = ""+EditID_input.getText()+EditJenisBahan_input.getText()+EditKeterangan_input.getText()+EditNamaCustomer_input.getText()+EditQty_input.getText()+EditSetter_input.getText()+EditSetter_input.getText()+EditUkuran_input.getText()+Editharga_input.getText()+EditpotHarga_input.getText();
+        String allstring = ""+EditID_input.getText()+EditJenisBahan_input.getText()+EditKeterangan_input.getText()+EditNamaCustomer_input.getText()+EditQty_input.getText()+EditSetter_input.getText()+EditSetter_input.getText()+EditUkuran_input.getText();
         String specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,'";
         System.out.println(allstring);
         for (int i = 0; i < specialChars.length(); i++) {
@@ -752,12 +671,12 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
              return;
          }
         }
-        if(EditID_input.getText().isEmpty()||EditJenisBahan_input.getText().isEmpty()||EditKeterangan_input.getText().isEmpty()||EditNamaCustomer_input.getText().isEmpty()||EditQty_input.getText().isEmpty()||EditSetter_input.getText().isEmpty()||EditUkuran_input.getText().isEmpty()||Editharga_input.getText().isEmpty()||EditpotHarga_input.getText().isEmpty()){
+        if(EditID_input.getText().isEmpty()||EditJenisBahan_input.getText().isEmpty()||EditKeterangan_input.getText().isEmpty()||EditNamaCustomer_input.getText().isEmpty()||EditQty_input.getText().isEmpty()||EditSetter_input.getText().isEmpty()||EditUkuran_input.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "SEMUA HARUS DIISI !!");
             return;
         }
-        write_data.updatedata_barang("barang"+Trilogiz.tanggalsekarang, EditJenisBahan_input.getText(), EditUkuran_input.getText(), EditKeterangan_input.getText(), EditNamaCustomer_input.getText(), EditSetter_input.getText(), Integer.parseInt(EditQty_input.getText()), idnow);
-        write_data.update_data_status("status"+Trilogiz.tanggalsekarang, EditStatus_input.getSelectedItem().toString(), Integer.parseInt(Editharga_input.getText()), Integer.parseInt(EditpotHarga_input.getText()), idnow);
+        write_data.updatedata_barang("barang"+Trilogiz.tanggalsekarang, EditJenisBahan_input.getText(), EditUkuran_input.getText(), EditKeterangan_input.getText(), EditNamaCustomer_input.getText(), EditSetter_input.getText(), Integer.parseInt(EditQty_input.getText()), EditStatus_input.getSelectedItem().toString(), idnow);
+        refreeshjtable(jTable1, new read_data(new String[]{"id","jenis_bahan","ukuran","keterangan","nama_customer","nama_desainer","qty","pengerjaan"},new String[]{"int","string","string","string","string","string","int","string"},"barang"+Trilogiz.tanggalsekarang).read_data());
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -771,20 +690,6 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
         }
     }//GEN-LAST:event_EditQty_inputKeyTyped
 
-    private void Editharga_inputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Editharga_inputKeyTyped
-        // TODO add your handling code here:
-        if(!Character.isDigit(evt.getKeyChar())){
-            evt.consume();
-        }
-    }//GEN-LAST:event_Editharga_inputKeyTyped
-
-    private void EditpotHarga_inputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EditpotHarga_inputKeyTyped
-        // TODO add your handling code here:
-        if(!Character.isDigit(evt.getKeyChar())){
-            evt.consume();
-        }
-    }//GEN-LAST:event_EditpotHarga_inputKeyTyped
-
     private void LabelTanggal_statusDateChanged(org.freixas.jcalendar.DateEvent evt) {//GEN-FIRST:event_LabelTanggal_statusDateChanged
         // TODO add your handling code here:
         String tglskrg = new SimpleDateFormat("yyyyMMdd").format(LabelTanggal_status.getDate());
@@ -795,6 +700,14 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
                System.out.println(tglskrg);
                Trilogiz.tanggalsekarang = tglskrg;
     }//GEN-LAST:event_LabelTanggal_statusDateChanged
+
+    private void EditID_inputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EditID_inputKeyPressed
+        // TODO add your handling code here:
+       if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                    System.out.println("Enter Press detected in Edit");
+                    jButton2MouseClicked(null);
+       }
+    }//GEN-LAST:event_EditID_inputKeyPressed
 
     /**
      * @param args the command line arguments
@@ -840,19 +753,15 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
     private javax.swing.JTextField EditSetter_input;
     private javax.swing.JComboBox<String> EditStatus_input;
     private javax.swing.JTextField EditUkuran_input;
-    private javax.swing.JTextField Editharga_input;
-    private javax.swing.JTextField EditpotHarga_input;
     private javax.swing.JLabel LabelCekdataorder;
     private javax.swing.JLabel LabelCekinputdata;
-    private javax.swing.JLabel LabelHarga;
-    private javax.swing.JLabel LabelHargaEdit;
-    private javax.swing.JTextField LabelHarga_input;
+    private javax.swing.JLabel LabelDesainerEdit;
     private javax.swing.JLabel LabelID;
     private javax.swing.JLabel LabelIDEdit;
     private javax.swing.JLabel LabelID_status;
-    private javax.swing.JLabel LabelJenisBahan;
-    private javax.swing.JLabel LabelJenisBahanEdit;
-    private javax.swing.JTextField LabelJenisBahan_input;
+    private javax.swing.JLabel LabelItem;
+    private javax.swing.JLabel LabelItemEdit;
+    private javax.swing.JTextField LabelItem_input;
     private javax.swing.JLabel LabelJob;
     private javax.swing.JLabel LabelJob_status;
     private javax.swing.JLabel LabelKetEdit;
@@ -861,15 +770,12 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
     private javax.swing.JLabel LabelNama;
     private javax.swing.JLabel LabelNamaCustomer;
     private javax.swing.JTextField LabelNamaCustomer_input;
-    private javax.swing.JLabel LabelNamaSetter;
-    private javax.swing.JTextField LabelNamaSetter_input;
+    private javax.swing.JLabel LabelNamaDesainer;
+    private javax.swing.JTextField LabelNamaDesainer_input;
     private javax.swing.JLabel LabelNama_status;
-    private javax.swing.JLabel LabelPootnganHarga;
-    private javax.swing.JTextField LabelPootnganHarga_input;
     private javax.swing.JLabel LabelQty;
     private javax.swing.JLabel LabelQtyEdit1;
     private javax.swing.JTextField LabelQty_input;
-    private javax.swing.JLabel LabelSetterEdit;
     private javax.swing.JLabel LabelStatusEdit;
     private javax.swing.JLabel LabelSubmit;
     private javax.swing.JLabel LabelTanggal;
@@ -879,7 +785,6 @@ public static java.util.Date tanggalsekarangDate = new GregorianCalendar(Integer
     private javax.swing.JTextField LabelUkuran_input;
     private javax.swing.JLabel LabelUsername;
     private javax.swing.JLabel LabelUsername_status;
-    private javax.swing.JLabel LabelpotHargaEdit;
     private javax.swing.JLabel NamaCustEdit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

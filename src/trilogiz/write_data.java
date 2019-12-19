@@ -69,13 +69,13 @@ public class write_data {
                 return false;
             }    
     }
-    static boolean updatedata_barang(String tablenamein,String jenis_bahan, String ukuran, String keterangan, String namacust, String namasetter, int qty,int id){
+    static boolean updatedata_barang(String tablenamein,String jenis_bahan, String ukuran, String keterangan, String namacust, String namasetter, int qty, String statuspengerjaan,int id){
         try(Connection conn = DriverManager.getConnection(Trilogiz.HOST,Trilogiz.USER,Trilogiz.PASS)) {
                 Trilogiz.sttm = conn.createStatement();
                 Trilogiz.res = Trilogiz.sttm.executeQuery(String.format("SELECT * FROM %s", tablenamein));
                 String SQLQuery;
                 Trilogiz.res.last();
-                SQLQuery = String.format("UPDATE `%s` SET `jenis_bahan` = '%s', `ukuran` = '%s', `keterangan` = '%s', `nama_customer` = '%s', `nama_setter` = '%s', `qty` = '%d' WHERE `id` = %d", tablenamein, jenis_bahan, ukuran, keterangan, namacust, namasetter, qty, id);
+                SQLQuery = String.format("UPDATE `%s` SET `jenis_bahan` = '%s', `ukuran` = '%s', `keterangan` = '%s', `nama_customer` = '%s', `nama_desainer` = '%s', `qty` = '%d', `pengerjaan` = '%s' WHERE `id` = %d", tablenamein, jenis_bahan, ukuran, keterangan, namacust, namasetter, qty, statuspengerjaan, id);
                 System.out.println(SQLQuery);
                 Trilogiz.sttm.execute(SQLQuery);
                 Trilogiz.sttm.close();

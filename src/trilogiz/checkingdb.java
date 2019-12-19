@@ -27,14 +27,7 @@ public class checkingdb {
                     }else{
                         String createtable;
                         System.out.println("Table "+namadb+" does not exist\nCreating new");
-                        if (namadb.contains("barang")){
-                        createtable = String.format("CREATE TABLE `%s` ( `id` INT(255) NOT NULL , `jenis_bahan` VARCHAR(255) NULL DEFAULT NULL , `ukuran` VARCHAR(255) NULL DEFAULT NULL , `keterangan` TEXT(255) NULL DEFAULT NULL , `nama_customer` VARCHAR(255) NULL DEFAULT NULL , `nama_setter` VARCHAR(255) NULL DEFAULT NULL , `qty` INT(255) NULL DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB",namadb);
-                        }else if (namadb.contains("status")){
-                        createtable = String.format("CREATE TABLE `%s` ( `id` INT(255) NOT NULL , `pengerjaan` VARCHAR(255) NULL DEFAULT NULL , `harga` INT(255) NULL DEFAULT NULL , `potongan_harga` INT(255) NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB",namadb);
-                        }
-                        else{
-                        createtable="";
-                        }
+                        createtable = String.format("CREATE TABLE `%s` ( `id` INT(255) NOT NULL , `jenis_bahan` VARCHAR(255) NULL DEFAULT NULL , `ukuran` VARCHAR(255) NULL DEFAULT NULL , `keterangan` TEXT(255) NULL DEFAULT NULL , `nama_customer` VARCHAR(255) NULL DEFAULT NULL , `nama_desainer` VARCHAR(255) NULL DEFAULT NULL , `qty` INT(255) NULL DEFAULT NULL , `pengerjaan` VARCHAR(255) NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB",namadb);
                         System.out.println(createtable);
                         Trilogiz.sttm.execute(createtable);
                         Trilogiz.sttm.close();

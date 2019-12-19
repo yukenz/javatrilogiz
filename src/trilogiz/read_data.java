@@ -27,7 +27,7 @@ public class read_data {
     }
 
     static String[] singlereaddata(int tgl,int id){
-        String[] returner = new String[9];
+        String[] returner = new String[7];
         try(Connection conn = DriverManager.getConnection(Trilogiz.HOST,Trilogiz.USER,Trilogiz.PASS)) {
                 Trilogiz.sttm = conn.createStatement();
                 Trilogiz.res = Trilogiz.sttm.executeQuery(String.format("SELECT * FROM %s WHERE id=%d", "barang"+tgl,id));
@@ -36,15 +36,11 @@ public class read_data {
                     returner[0] = Trilogiz.res.getString("nama_customer");
                     returner[1] = Trilogiz.res.getString("jenis_bahan");
                     returner[2] = Trilogiz.res.getString("ukuran");
-                    returner[3] = Trilogiz.res.getString("nama_setter");
-                    returner[4] = Trilogiz.res.getString("qty");;
-                    returner[8] = Trilogiz.res.getString("keterangan");
-                }
-                Trilogiz.res = Trilogiz.sttm.executeQuery(String.format("SELECT * FROM %s WHERE id=%d", "status"+tgl,id));
-                if(Trilogiz.res.next()){
+                    returner[3] = Trilogiz.res.getString("nama_desainer");
+                    returner[4] = Trilogiz.res.getString("qty");
                     returner[5] = Trilogiz.res.getString("pengerjaan");
-                    returner[6] = Trilogiz.res.getString("harga");
-                    returner[7] = Trilogiz.res.getString("potongan_harga");
+                    returner[6] = Trilogiz.res.getString("keterangan");
+                    
                 }
                 Trilogiz.sttm.close();
                 conn.close();
